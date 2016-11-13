@@ -6,7 +6,7 @@
 #define LEAPDUEL_SAMPLELISTENER_H
 
 
-class SampleListener : public Leap::Listener {
+class LeapListener : public Leap::Listener {
 public:
 	virtual void onConnect(const Leap::Controller&);
 	virtual void onFrame(const Leap::Controller&);

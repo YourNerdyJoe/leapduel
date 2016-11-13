@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <Leap.h>
+#include <iostream>
 #include <zconf.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +12,7 @@
 #include "../common/texture.h"
 #include "../common/hand.h"
 #include "../common/deck.h"
-#include "SampleListener.h"
+#include "LeapListener.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -21,14 +22,16 @@ SDL_Renderer* main_renderer;
 
 bool init();
 void quit();
-
+void getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
+listener);
 
 int main(int argc, char* argv[])
 {
 	int mouse_x, mouse_y;
 	int mouse_start_x, mouse_start_y;
+    float leap_x, leap_y;
 
-	srand(time(NULL));
+  	srand(time(NULL));
 
 	dbgInit("debug.txt");
 	if(!init()) return 1;
@@ -54,16 +57,23 @@ int main(int argc, char* argv[])
 	deck.setPosition(540, 120);
 
 
-	SampleListener listener;
+	LeapListener listener;
 	Leap::Controller controller;
 	controller.addListener(listener);
 	controller.setPolicy(Leap::Controller::POLICY_IMAGES);
+    if(!controller.isGestureEnabled(Leap::Gesture::TYPE_SWIPE)){
+        controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
+    }
+
+    listener.onConnect(controller);
 
 	//loop
 	SDL_Event ev;
 	bool running = true;
 	while(running)
 	{
+
+        getCoords(&leap_x, &leap_y, controller, listener);
 		while(SDL_PollEvent(&ev))
 		{
 			switch(ev.type)
@@ -157,6 +167,19 @@ bool init()
     }
 
 	return true;
+}
+
+void getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
+listener){
+
+    Leap::Frame frame = controller.frame();
+    Leap::Finger finger = frame.fingers().frontmost();
+    Leap::Vector stabilizedPosition = finger.stabilizedTipPosition();
+    Leap::InteractionBox iBox = controller.frame().interactionBox();
+    Leap::Vector normalizedPosition = iBox.normalizePoint(stabilizedPosition);
+    *a = normalizedPosition.x * SCREEN_WIDTH;
+    *b = normalizedPosition.y * SCREEN_HEIGHT;
+
 }
 
 void quit()
