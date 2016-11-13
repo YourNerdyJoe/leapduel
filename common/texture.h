@@ -5,8 +5,8 @@
 #include <string>
 #include "cardinfo.h"
 
-#define CARD_WIDTH 80
-#define CARD_HEIGHT 100
+#define CARD_WIDTH 160
+#define CARD_HEIGHT 200
 
 struct Texture
 {

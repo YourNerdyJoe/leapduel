@@ -66,7 +66,7 @@ bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90, i
 	}
 }
 
-#define SLOT_SIZE 100
+#define SLOT_SIZE 200
 
 void Field::draw(TextureDatabase& tdb, CardDatabase& cdb, int angle)
 {

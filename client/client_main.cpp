@@ -16,8 +16,8 @@
 #include "LeapListener.h"
 #include "LeapMotion.h"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 1240
+#define SCREEN_HEIGHT 720
 
 SDL_Window* main_window;
 SDL_Renderer* main_renderer;
@@ -48,18 +48,18 @@ int main(int argc, char* argv[])
 	TextureDatabase tdb;
 
 	Field field;
-	field.setPosition(20, 20);
+	field.setPosition(40, 40);
 	//field.playCard(cdb, 0, false, true);
 	//field.playCard(cdb, 0, false, false);
 	//field.playCard(cdb, 0, false, false);
 
 	Hand hand;
 	//hand.setPosition(320, 380);
-	hand.setPosition(30, 380);
+	hand.setPosition(30*2, SCREEN_HEIGHT - CARD_HEIGHT/2 - 40);
 
 	Deck deck;
 	deck.init(0, 7, 3);
-	deck.setPosition(540, 120);
+	deck.setPosition(540*2 - 20, 120*2);
 
 	for(int i = 0; i < 5; i++)
 	{
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 	}
 
 	Grave grave;
-	grave.setPosition(540, 120 - CARD_HEIGHT);
+	grave.setPosition(540*2 - 20, 2*120 - CARD_HEIGHT);
 
 
 	LeapListener listener;
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 						}
 
 						slot = field.pointToSlot(mouse_start_x, mouse_start_y);
-						if(grave.isPointOnGrave(mouse_x, mouse_y))
+						if(slot != -1 && grave.isPointOnGrave(mouse_x, mouse_y))
 						{
 							if(field.getSlotIndex(slot) != -1)
 							{
@@ -152,7 +152,7 @@ int main(int argc, char* argv[])
 					
 					if(cur_gesture != last_gesture)
 					{
-						hand.playCardAt(cdb, leap_x, 380, false, field, -1);
+						hand.playCardAt(cdb, leap_x, 380*2, false, field, -1);
 						last_gesture = cur_gesture;
 						last_ticks = ticks;
 					}
