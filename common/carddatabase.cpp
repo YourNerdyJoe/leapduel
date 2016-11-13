@@ -1,18 +1,23 @@
-#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "carddatabase.h"
 #include "debug.h"
 
 char buf [256];
 const char* getString(FILE* f)
 {
-	fscanf(f, "%s", buf);
+	buf[0] = 0;
+	fgets(buf, 256, f);
+	int end = strlen(buf);
+	if(end > 0 && buf[end-1] == '\n') buf[end-1] = 0;
 	return buf;
 }
 
 int getInt(FILE* f)
 {
 	int ret;
-	fscanf(f, "%d", &ret);
+	ret = atoi(getString(f));
 	return ret;
 }
 
@@ -25,25 +30,19 @@ bool CardDatabase::loadFile(const char* filename)
 		return false;
 	}
 
+	//int count = getInt(f);
+	//for(int i = 0; i < count; i++)
 	while(!feof(f))
 	{
-		try
-		{
-			CardInfo info;
-			info.name = getString(f);
-			info.texture = getString(f);
-			info.type = (CardType)getInt(f);
-			info.atk = getInt(f);
-			info.def = getInt(f);
-			info.description = getString(f);
+		CardInfo info;
+		info.name = getString(f);
+		info.texture = getString(f);
+		info.type = (CardType)getInt(f);
+		info.atk = getInt(f);
+		info.def = getInt(f);
+		info.description = getString(f);
 
-			card_info.push_back(info);
-		}
-		catch(std::exception e)
-		{
-			dbgPrint(DBG_ERROR "error while reading file '%s'", filename);
-			return false;
-		}
+		card_info.push_back(info);
 	}
 
 	return true;
@@ -52,6 +51,7 @@ bool CardDatabase::loadFile(const char* filename)
 void CardDatabase::debug()
 {
 	size_t i, len = card_info.size();
+	dbgPrint("cards: %u\n", len);
 	for(i = 0; i < len; i++)
 	{
 		CardInfo& info = card_info[i];

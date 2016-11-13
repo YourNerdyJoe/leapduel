@@ -1,6 +1,11 @@
-hi
-hi.png
+Dark Magician
+dark_magician.jpg
 1
-2000
-1500
-bye
+2500
+2100
+
+Dark Magician Girl
+dark_magician.jpg
+1
+2500
+2100

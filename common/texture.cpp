@@ -1,6 +1,7 @@
 #include "texture.h"
 #include <SDL_image.h>
 #include "debug.h"
+#include "carddatabase.h"
 
 extern SDL_Renderer* main_renderer;
 const std::string texture_dir = "textures/";
@@ -39,12 +40,12 @@ void Texture::destroy()
 	texture = nullptr;
 }
 
-Texture* TextureDatabase::getTexture(const char* name)
+SDL_Texture* TextureDatabase::getTexture(const char* name)
 {
 	auto it = texture_list.begin();
 	if(it != texture_list.end())
 	{
-		return &it->second;
+		return it->second.texture;
 	}
 	else
 	{
@@ -52,9 +53,9 @@ Texture* TextureDatabase::getTexture(const char* name)
 	}
 }
 
-Texture* TextureDatabase::getLoadTexture(const char* name)
+SDL_Texture* TextureDatabase::getLoadTexture(const char* name)
 {
-	Texture* ret = getTexture(name);
+	SDL_Texture* ret = getTexture(name);
 	if(!ret)
 	{
 		Texture tex;
@@ -71,4 +72,21 @@ TextureDatabase::~TextureDatabase()
 	{
 		it->second.destroy();
 	}
+}
+
+
+void drawCard(TextureDatabase& tdb, CardInfo& info, int x, int y, int angle)
+{
+	SDL_Rect dst = { x - 42, y - 60, 84, 120 };
+	SDL_Rect src = { 0, 0, 167, 245 };
+
+	SDL_Point center = { 42, 60 };
+
+	SDL_RenderCopyEx(main_renderer, 
+		tdb.getLoadTexture(info.texture.c_str()),
+		&src,
+		&dst,
+		(double)angle,
+		&center,
+		SDL_FLIP_NONE);
 }

@@ -4,6 +4,7 @@
 #include "../common/debug.h"
 #include "../common/carddatabase.h"
 #include "../common/field.h"
+#include "../common/texture.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -19,11 +20,16 @@ int main(int argc, char* argv[])
 	dbgInit("debug.txt");
 	if(!init()) return 1;
 
-	CardDatabase db;
-	db.loadFile("test-db.txt");
-	db.debug();
+	CardDatabase cdb;
+	cdb.loadFile("test-db.txt");
+	cdb.debug();
+
+	TextureDatabase tdb;
 
 	Field field;
+	field.playCard(cdb, 0, false, true);
+	field.playCard(cdb, 0, false, false);
+	field.playCard(cdb, 0, false, false);
 
 	//loop
 	SDL_Event ev;
@@ -48,7 +54,7 @@ int main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(main_renderer, 255, 255, 255, 255);
 
 		//draw
-		field.draw(70, 20, 0);
+		field.draw(tdb, cdb, 20, 20, 0);
 
 		//flip
 		SDL_RenderPresent(main_renderer);
