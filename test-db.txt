@@ -15,3 +15,27 @@ babydragon.jpg
 1
 1200
 700
+
+Mystical Elf
+mysticalelf.jpg
+1
+800
+2000
+
+Summoned Skull
+summonedskull.jpg
+1
+2500
+1200
+
+Mirror Force
+mirrorforce.jpg
+3
+0
+0
+
+Dark Hole
+darkhole.jpg
+2
+0
+0

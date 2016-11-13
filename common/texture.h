@@ -30,6 +30,7 @@ public:
 
 
 void drawCard(TextureDatabase& tdb, CardInfo& info, int x, int y, int angle);
+void drawCardBlank(int x, int y);
 
 extern SDL_Renderer* main_renderer;
 

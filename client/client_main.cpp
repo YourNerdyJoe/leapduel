@@ -12,6 +12,7 @@
 #include "../common/texture.h"
 #include "../common/hand.h"
 #include "../common/deck.h"
+#include "../common/grave.h"
 #include "LeapListener.h"
 
 #define SCREEN_WIDTH 640
@@ -28,8 +29,8 @@ listener);
 int main(int argc, char* argv[])
 {
 	int mouse_x, mouse_y;
-	int mouse_start_x, mouse_start_y;
     float leap_x, leap_y;
+	int mouse_start_x = 0, mouse_start_y = 0;
 
   	srand(time(NULL));
 
@@ -49,12 +50,20 @@ int main(int argc, char* argv[])
 	//field.playCard(cdb, 0, false, false);
 
 	Hand hand;
-	hand.setPosition(320, 380);
-	hand.addCard(0);
+	//hand.setPosition(320, 380);
+	hand.setPosition(30, 380);
 
 	Deck deck;
-	deck.init(0, 3, 3);
+	deck.init(0, 7, 3);
 	deck.setPosition(540, 120);
+
+	for(int i = 0; i < 5; i++)
+	{
+		hand.addCard(deck.popCard());
+	}
+
+	Grave grave;
+	grave.setPosition(540, 120 - CARD_HEIGHT);
 
 
 	LeapListener listener;
@@ -102,7 +111,17 @@ int main(int argc, char* argv[])
 						if(slot != -1)
 						{
 							//drag
-							dbgPrint("drag card\n");
+							hand.playCardAt(cdb, mouse_start_x, mouse_start_y, false, field, slot);
+						}
+
+						slot = field.pointToSlot(mouse_start_x, mouse_start_y);
+						if(grave.isPointOnGrave(mouse_x, mouse_y))
+						{
+							if(field.getSlotIndex(slot) != -1)
+							{
+								grave.setIndex(field.getSlotIndex(slot));
+								field.setSlotIndex(slot, -1);
+							}
 						}
 					}
 			}
@@ -119,6 +138,7 @@ int main(int argc, char* argv[])
 		//draw
 		field.draw(tdb, cdb, 0);
 		hand.draw(tdb, cdb);
+		grave.draw(tdb, cdb, 0);
 		deck.draw(tdb, 0);
 
 		//test
@@ -169,6 +189,8 @@ bool init()
 	return true;
 }
 
+
+//get the coordinates of where the hand in LeapMotoin is
 void getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
 listener){
 

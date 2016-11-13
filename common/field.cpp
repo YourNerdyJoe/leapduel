@@ -47,10 +47,17 @@ bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90, i
 		if((info.type == CARD_MONSTER && slot < 5)||
 			(info.type != CARD_MONSTER && slot >=5))
 		{
-			card_slot[slot].index = index;
-			card_slot[slot].is_set = is_set;
-			card_slot[slot].is_rot90 = (info.type == CARD_MONSTER && is_set);
-			return true;
+			if(card_slot[slot].index == -1)
+			{
+				card_slot[slot].index = index;
+				card_slot[slot].is_set = is_set;
+				card_slot[slot].is_rot90 = (info.type == CARD_MONSTER && is_set);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
@@ -104,4 +111,14 @@ int Field::pointToSlot(int xp, int yp)
 		slot = left + top * 5;
 	}
 	return slot;
+}
+
+int Field::getSlotIndex(int slot)
+{
+	return card_slot[slot].index;
+}
+
+void Field::setSlotIndex(int slot, int index)
+{
+	card_slot[slot].index = index;
 }

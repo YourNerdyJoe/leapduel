@@ -90,3 +90,19 @@ void drawCard(TextureDatabase& tdb, CardInfo& info, int x, int y, int angle)
 		&center,
 		SDL_FLIP_NONE);
 }
+
+void drawCardBlank(int x, int y)
+{
+	SDL_Rect dst = { x - CARD_WIDTH/2, y - CARD_HEIGHT/2, CARD_WIDTH, CARD_HEIGHT };
+	SDL_Rect src = { 0, 0, 167, 245 };
+
+	SDL_Point center = { CARD_WIDTH/2, CARD_HEIGHT/2 };
+
+	SDL_RenderCopyEx(main_renderer, 
+		nullptr,
+		&src,
+		&dst,
+		0.0,
+		&center,
+		SDL_FLIP_NONE);
+}

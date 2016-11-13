@@ -24,6 +24,8 @@ public:
 	void draw(TextureDatabase& tdb, CardDatabase& cdb, int angle);
 
 	int pointToSlot(int x, int y);
+	int getSlotIndex(int slot);
+	void setSlotIndex(int slot, int index);
 };
 
 #endif
