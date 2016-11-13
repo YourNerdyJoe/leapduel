@@ -64,6 +64,11 @@ int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool*
                 *type = 1;
 
             }
+            case Leap::Gesture::TYPE_SCREEN_TAP:
+            {
+               Leap::Vector handDir = gesture.hands()[0].direction();
+                *type = 1;
+            }
             default:
                 break;
         }
