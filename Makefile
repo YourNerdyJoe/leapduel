@@ -6,7 +6,7 @@ O_FILES := $(addprefix $(BUILD)/, $(CPP_FILES:.cpp=.o))
 DEPENDS := $(O_FILES:.o=.d)
 
 CC := g++
-CC_FLAGS := -g -Wall -O2 -std=c++11 -I /usr/include/SDL2/
+CC_FLAGS := -g -Wall -O2 -std=c++11 -I /usr/include/SDL2/ -I /opt/LeapSDK/include/
 LD_FLAGS := -lSDL2 -lSDL2_image -lSDL2_net -lLeap
 
 TARGET := leapduel
