@@ -80,14 +80,17 @@ int main(int argc, char* argv[])
     if(!controller.isGestureEnabled(Leap::Gesture::TYPE_KEY_TAP)){
        controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
        controller.config().setFloat ("Gesture.KeyTap.MinDownVelocity", 40.0f);
-       controller.config().setFloat ("Gesture.KeyTap.HistorySeconds", .2f);
+       controller.config().setFloat ("Gesture.KeyTap.HistorySeconds", .6f);
        controller.config().setFloat ("Gesture.KeyTap.MinDistance", 1.0f);
        controller.config().save();
     }
     if(!controller.isGestureEnabled(Leap::Gesture::TYPE_SCREEN_TAP)){
        controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP) ;
+        controller.config().setFloat ("Gesture.ScreenTap.MinDownVelocity", 30.0);
+        controller.config().setFloat("Gesture.ScreenTap.HistorySeconds", .5);
+        controller.config().setFloat("Gesture.ScreenTap.MinDistance", 1.0);
+        controller.config().save();
     }
-
 
     listener.onConnect(controller);
 
