@@ -3,15 +3,15 @@
 //
 
 #include <Leap.h>
-#include <GL/gl.h>
-#include <GLES/gl.h>
-#include <GLES2/gl2.h>
+//#include <GL/gl.h>
+//#include <GLES/gl.h>
+//#include <GLES2/gl2.h>
 #include "LeapMotion.h"
 #include "LeapMotion.h"
 #include "LeapListener.h"
 
 
-int LeapMotion::ProcessGestures(Leap::Controller controller)
+int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool* is_horizontal)
 {
     const Leap::GestureList gestures = controller.frame().gestures();
 
@@ -26,6 +26,7 @@ int LeapMotion::ProcessGestures(Leap::Controller controller)
     for (auto it = gestures.begin(); gestures.end() != it; ++it)
     {
         Leap::Gesture gesture = *it;
+        *is_horizontal = false;
 
         switch (gesture.type())
         {
@@ -33,11 +34,27 @@ int LeapMotion::ProcessGestures(Leap::Controller controller)
             {
                 Leap::Vector handDir = gesture.hands()[0].direction();
 
+                if(id) *id = gesture.id();
                 // naive left/right swipe detection
-                if (handDir.y < -0.5f)
+                
+                if (handDir.y < -0.7f)
+                {
                     return -1;
-                else if (handDir.y > 0.5f)
+                }
+                else if (handDir.y > 0.7f)
+                {
                     return 1;
+                }
+                if (handDir.x < -1.0f)
+                {
+                    *is_horizontal = true;
+                    return -1;
+                }
+                else if (handDir.x > 1.0f)
+                {
+                    *is_horizontal = true;
+                    return 1;
+                }
             }
             default:
                 break;

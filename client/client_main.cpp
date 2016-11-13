@@ -33,6 +33,9 @@ int main(int argc, char* argv[])
     float leap_x, leap_y;
 	int mouse_start_x = 0, mouse_start_y = 0;
 
+	uint32_t last_gesture = 0xFFFF;
+	uint32_t cur_gesture;
+
   	srand(time(NULL));
 
 	dbgInit("debug.txt");
@@ -76,6 +79,8 @@ int main(int argc, char* argv[])
     }
 
     listener.onConnect(controller);
+
+	int ticks, last_ticks = SDL_GetTicks();
 
 	//loop
 	SDL_Event ev;
@@ -125,22 +130,54 @@ int main(int argc, char* argv[])
 					}
 			}
 		}
+
+		ticks = SDL_GetTicks();
 		
+		bool is_hori = false;
 		bool is_leap_valid = getCoords(&leap_x, &leap_y, controller, listener);
-        int swipe_dir = LeapMotion::ProcessGestures(controller);
+        int swipe_dir = LeapMotion::ProcessGestures(controller, &cur_gesture, &is_hori);
 
-        if(swipe_dir == -1 ){
-            dbgPrint("-1 Yo");
-            std::cout << "minus 1" << std::endl;
-        }
-        else if (swipe_dir == 1)
-        {
-            dbgPrint("1 Yo");
-            std::cout << "positive 1" << std::endl;
-        } else {
-           // dbgPrint("0 Yo");
+		if(ticks - last_ticks > 1000)	//one gesture per sec
+		{
+			if(!is_hori)
+			{
+				if(swipe_dir == -1 ){
+					//dbgPrint("-1 Yo");
+					std::cout << "minus 1" << std::endl;
+				}
+				else if (swipe_dir == 1)
+				{
+					//dbgPrint("1 Yo");
+					std::cout << "positive 1" << std::endl;
+					
+					if(cur_gesture != last_gesture)
+					{
+						hand.playCardAt(cdb, leap_x, 380, false, field, -1);
+						last_gesture = cur_gesture;
+						last_ticks = ticks;
+					}
 
-        }
+				} else {
+				// dbgPrint("0 Yo");
+
+				}
+			}
+			else
+			{
+				if(swipe_dir == -1 ){
+					//dbgPrint("-1 Yo");
+					std::cout << "minus 1" << std::endl;
+
+					if(cur_gesture != last_gesture)
+					{
+						//swipe left to draw cards
+						hand.addCard(deck.popCard());
+						last_gesture = cur_gesture;
+						last_ticks = ticks;
+					}
+				}
+			}
+		}
 
 		//update game logic
 		SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -233,4 +270,3 @@ void quit()
 	
 	SDL_Quit();
 }
-
