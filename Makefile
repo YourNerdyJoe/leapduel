@@ -1,5 +1,5 @@
 
-SOURCES := client common
+SOURCES := client common client/lib
 BUILD := client/build
 CPP_FILES := $(foreach dir, $(SOURCES), $(notdir $(wildcard $(dir)/*.cpp)))
 O_FILES := $(addprefix $(BUILD)/, $(CPP_FILES:.cpp=.o))
@@ -7,7 +7,7 @@ DEPENDS := $(O_FILES:.o=.d)
 
 CC := g++
 CC_FLAGS := -g -Wall -O2 -std=c++11 -I /usr/include/SDL2/
-LD_FLAGS := -lSDL2 -lSDL2_image -lSDL2_net
+LD_FLAGS := -lSDL2 -lSDL2_image -lSDL2_net -lLeap
 
 TARGET := leapduel
 
