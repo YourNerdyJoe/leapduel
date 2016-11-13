@@ -141,8 +141,9 @@ int main(int argc, char* argv[])
 		ticks = SDL_GetTicks();
 		
 		bool is_hori = false;
+		int type = 0;
 		bool is_leap_valid = getCoords(&leap_x, &leap_y, controller, listener);
-        int swipe_dir = LeapMotion::ProcessGestures(controller, &cur_gesture, &is_hori);
+        int swipe_dir = LeapMotion::ProcessGestures(controller, &cur_gesture, &is_hori, &type);
 
 		if(ticks - last_ticks > 1000)	//one gesture per sec
 		{
@@ -171,8 +172,7 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				if(swipe_dir == -1 ){
-					//dbgPrint("-1 Yo");
+				if(swipe_dir == 1 ){
 					std::cout << "minus 1" << std::endl;
 
 					if(cur_gesture != last_gesture)

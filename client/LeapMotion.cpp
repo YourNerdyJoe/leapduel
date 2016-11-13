@@ -11,7 +11,7 @@
 #include "LeapListener.h"
 
 
-int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool* is_horizontal)
+int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool* is_horizontal, int* type)
 {
     const Leap::GestureList gestures = controller.frame().gestures();
 
