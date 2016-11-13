@@ -3,3 +3,5 @@ server/build/*
 leapduel
 leapduelserver
 debug.txt
+*.vcx.*
+*.vcx*

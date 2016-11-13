@@ -1,7 +1,8 @@
-#include <Windows.h>
+//#include <Windows.h>
+#include <unistd.h>
 #include <iostream>
 #include <string.h>
-#include "Leap.h"
+#include <Leap.h>
 
 using namespace Leap;
 
@@ -22,7 +23,7 @@ void SampleListener::onFrame(const Controller& controller) {
 	Finger index = frame.finger(4);
 	//Finger pointer = frame.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
 	
-	Leap::Vector direction = index.direction();
+	//Leap::Vector direction = index.direction();
 
 	//if (index.isValid()) {
 		std::cout << "Frame id: " << frame.id()
@@ -30,7 +31,7 @@ void SampleListener::onFrame(const Controller& controller) {
 			<< ", hands: " << frame.hands().count()
 			<< ", fingers: " << frame.fingers().count() << std::endl;
 
-		Sleep(50);
+		//sleep(50);
 		std::cout << "Finger :" << pointable.tipPosition().toString();
 	//}
 }
