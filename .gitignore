@@ -5,3 +5,4 @@ leapduelserver
 debug.txt
 *.vcx.*
 *.vcx*
+build/*
