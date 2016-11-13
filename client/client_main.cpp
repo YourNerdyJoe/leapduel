@@ -199,9 +199,10 @@ int main(int argc, char* argv[])
 					last_gesture = cur_gesture;
 					last_ticks = ticks;
 				}
-				else if(false)
+				else if(hand.playCardAt(cdb, leap_x, leap_y, true, field, -1))
 				{
-
+					last_gesture = cur_gesture;
+					last_ticks = ticks;
 				}
 				else
 				{
@@ -214,7 +215,7 @@ int main(int argc, char* argv[])
 							grave.setIndex(field.getSlotIndex(slot));
 							field.setSlotIndex(slot, -1);
 							last_gesture = cur_gesture;
-							last_ticks = ticks;
+							//last_ticks = ticks;
 						}
 					}
 				}

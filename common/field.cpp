@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include "field.h"
 #include "texture.h"
+#include "deck.h"
 
 void Field::setPosition(int xp, int yp)
 {
@@ -21,7 +22,7 @@ bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90, i
 				{
 					card_slot[i].index = index;
 					card_slot[i].is_set = is_set;
-					card_slot[i].is_rot90 = is_rot90;
+					card_slot[i].is_rot90 = (info.type == CARD_MONSTER && is_set);
 					return true;
 				}
 			}
@@ -92,7 +93,15 @@ void Field::draw(TextureDatabase& tdb, CardDatabase& cdb, int angle)
 		if(idx != -1)
 		{
 			int theta = angle + (card_slot[i].is_rot90?90:0);
-			drawCard(tdb, cdb.getCardInfo(idx), r.x + card_x, r.y + card_y, theta);
+			if(card_slot[i].is_set)
+			{
+				Deck d;
+				d.setPosition(r.x + 20, r.y);
+				d.init(0, 1, 1);
+				d.draw(tdb, theta);
+			}
+			else
+				drawCard(tdb, cdb.getCardInfo(idx), r.x + card_x, r.y + card_y, theta);
 		}
 	}
 }
