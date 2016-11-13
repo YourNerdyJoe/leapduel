@@ -9,7 +9,7 @@ struct LData;
 class LeapMotion {
 public:
 	virtual void onConnCurserMove(const Leap::Controller&);
-	static int ProcessGestures(Leap::Controller controller);
+	static int ProcessGestures(Leap::Controller controller, uint32_t* id, bool* is_horizontal);
 };
 
 #endif //LEAPDUEL_LEAPMOTION_H
