@@ -1,15 +1,66 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include "../common/debug.h"
+#include "../common/carddatabase.h"
+#include "../common/field.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
+SDL_Window* main_window;
+SDL_Renderer* main_renderer;
+
+bool init();
+void quit();
+
 int main(int argc, char* argv[])
 {
-	SDL_Window* main_window;
-	SDL_Renderer* main_renderer;
+	dbgInit("debug.txt");
+	if(!init()) return 1;
 
+	CardDatabase db;
+	db.loadFile("test-db.txt");
+	db.debug();
+
+	Field field;
+
+	//loop
+	SDL_Event ev;
+	bool running = true;
+	while(running)
+	{
+		while(SDL_PollEvent(&ev))
+		{
+			switch(ev.type)
+			{
+				case SDL_QUIT:
+					running = false;
+					break;
+			}
+		}
+		
+		//update game logic
+
+		//clear
+		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
+		SDL_RenderClear(main_renderer);
+		SDL_SetRenderDrawColor(main_renderer, 255, 255, 255, 255);
+
+		//draw
+		field.draw(70, 20, 0);
+
+		//flip
+		SDL_RenderPresent(main_renderer);
+	}
+
+	quit();
+	dbgExit();
+	return 0;
+}
+
+bool init()
+{
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	main_window = SDL_CreateWindow(	"title", 
@@ -38,35 +89,11 @@ int main(int argc, char* argv[])
         return false;
     }
 
-	//loop
+	return true;
+}
 
-	SDL_Event ev;
-	bool running = true;
-	while(running)
-	{
-		while(SDL_PollEvent(&ev))
-		{
-			switch(ev.type)
-			{
-				case SDL_QUIT:
-					running = false;
-					break;
-			}
-		}
-		
-		//update game logic
-
-		//clear
-		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
-		SDL_RenderClear(main_renderer);
-		SDL_SetRenderDrawColor(main_renderer, 255, 255, 255, 255);
-
-		//draw
-
-		//flip
-		SDL_RenderPresent(main_renderer);
-	}
-
+void quit()
+{
 	IMG_Quit();
 
 	if(main_renderer) SDL_DestroyRenderer(main_renderer);

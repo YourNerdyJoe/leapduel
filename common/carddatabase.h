@@ -9,6 +9,7 @@ class CardDatabase
 
 public:
 	bool loadFile(const char* filename);
+	void debug();
 
 	inline CardInfo& getCardInfo(int index) { return card_info[index]; }
 };
