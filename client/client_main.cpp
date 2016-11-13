@@ -22,6 +22,7 @@ void quit();
 int main(int argc, char* argv[])
 {
 	int mouse_x, mouse_y;
+	int mouse_start_x, mouse_starty;
 
 	srand(time(NULL));
 
@@ -35,6 +36,7 @@ int main(int argc, char* argv[])
 	TextureDatabase tdb;
 
 	Field field;
+	field.setPosition(20, 20);
 	field.playCard(cdb, 0, false, true);
 	field.playCard(cdb, 0, false, false);
 	field.playCard(cdb, 0, false, false);
@@ -63,10 +65,19 @@ int main(int argc, char* argv[])
 				case SDL_MOUSEBUTTONDOWN:
 					if(ev.button.button == SDL_BUTTON_LEFT)
 					{
+						mouse_start_x = ev.button.x;
+						mouse_start_y = ev.button.y;
+
 						if(deck.isPointOnDeck(ev.button.x, ev.button.y))
 							hand.addCard(deck.popCard());
 					}
 					break;
+
+				case SDL_MOUSEBUTTONDOWN:
+					if(ev.button.button == SDL_BUTTON_LEFT)
+					{
+
+					}
 			}
 		}
 		
@@ -79,7 +90,7 @@ int main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(main_renderer, 255, 255, 255, 255);
 
 		//draw
-		field.draw(tdb, cdb, 20, 20, 0);
+		field.draw(tdb, cdb, 0);
 		hand.draw(tdb, cdb);
 		deck.draw(tdb, 0);
 
