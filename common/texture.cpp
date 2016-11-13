@@ -42,7 +42,7 @@ void Texture::destroy()
 
 SDL_Texture* TextureDatabase::getTexture(const char* name)
 {
-	auto it = texture_list.begin();
+	auto it = texture_list.find(name);
 	if(it != texture_list.end())
 	{
 		return it->second.texture;
@@ -77,10 +77,10 @@ TextureDatabase::~TextureDatabase()
 
 void drawCard(TextureDatabase& tdb, CardInfo& info, int x, int y, int angle)
 {
-	SDL_Rect dst = { x - 42, y - 60, 84, 120 };
+	SDL_Rect dst = { x - CARD_WIDTH/2, y - CARD_HEIGHT/2, CARD_WIDTH, CARD_HEIGHT };
 	SDL_Rect src = { 0, 0, 167, 245 };
 
-	SDL_Point center = { 42, 60 };
+	SDL_Point center = { CARD_WIDTH/2, CARD_HEIGHT/2 };
 
 	SDL_RenderCopyEx(main_renderer, 
 		tdb.getLoadTexture(info.texture.c_str()),

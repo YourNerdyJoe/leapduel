@@ -5,6 +5,9 @@
 #include <string>
 #include "cardinfo.h"
 
+#define CARD_WIDTH 80
+#define CARD_HEIGHT 100
+
 struct Texture
 {
 	std::string name;
