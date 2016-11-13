@@ -14,7 +14,7 @@ public:
 	void addCard(int index);
 
 	int getCardAt(int x, int y);
-	int playCardAt(int x, int y, Field& field);
+	int playCardAt(int x, int y, Field& field, int slot);
 };
 
 #endif

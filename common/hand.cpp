@@ -27,7 +27,7 @@ int Hand::getCardAt(int x, int y)
 	return -1;
 }
 
-int Hand::playCardAt(int x, int y, Field& field)
+int Hand::playCardAt(CardDatabase& cdb, int x, int y, Field& field, int slot)
 {
 	return -1;
 }

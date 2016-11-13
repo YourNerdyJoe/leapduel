@@ -22,7 +22,7 @@ void quit();
 int main(int argc, char* argv[])
 {
 	int mouse_x, mouse_y;
-	int mouse_start_x, mouse_starty;
+	int mouse_start_x, mouse_start_y;
 
 	srand(time(NULL));
 
@@ -37,9 +37,9 @@ int main(int argc, char* argv[])
 
 	Field field;
 	field.setPosition(20, 20);
-	field.playCard(cdb, 0, false, true);
-	field.playCard(cdb, 0, false, false);
-	field.playCard(cdb, 0, false, false);
+	//field.playCard(cdb, 0, false, true);
+	//field.playCard(cdb, 0, false, false);
+	//field.playCard(cdb, 0, false, false);
 
 	Hand hand;
 	hand.setPosition(320, 380);
@@ -73,10 +73,17 @@ int main(int argc, char* argv[])
 					}
 					break;
 
-				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONUP:
 					if(ev.button.button == SDL_BUTTON_LEFT)
 					{
-
+						mouse_x = ev.button.x;
+						mouse_y = ev.button.y;
+						int slot = field.pointToSlot(mouse_x, mouse_y);
+						if(slot != -1)
+						{
+							//drag
+							dbgPrint("drag card\n");
+						}
 					}
 			}
 		}

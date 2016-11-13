@@ -20,7 +20,7 @@ class Field
 
 public:
 	void setPosition(int x, int y);
-	bool playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90);
+	bool playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90, int slot);
 	void draw(TextureDatabase& tdb, CardDatabase& cdb, int angle);
 
 	int pointToSlot(int x, int y);

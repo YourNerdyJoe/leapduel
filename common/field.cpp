@@ -8,36 +8,54 @@ void Field::setPosition(int xp, int yp)
 	y = yp;
 }
 
-bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90)
+bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90, int slot)
 {
 	CardInfo& info = cdb.getCardInfo(index);
-	if(info.type == CARD_MONSTER)
+	if(slot == -1)
 	{
-		for(int i = 0; i < 5; i++)
+		if(info.type == CARD_MONSTER)
 		{
-			if(card_slot[i].index == -1)
+			for(int i = 0; i < 5; i++)
 			{
-				card_slot[i].index = index;
-				card_slot[i].is_set = is_set;
-				card_slot[i].is_rot90 = is_rot90;
-				return true;
+				if(card_slot[i].index == -1)
+				{
+					card_slot[i].index = index;
+					card_slot[i].is_set = is_set;
+					card_slot[i].is_rot90 = is_rot90;
+					return true;
+				}
 			}
+			return false;
 		}
-		return false;
+		else
+		{
+			for(int i = 5; i < 10; i++)
+			{
+				if(card_slot[i].index == -1)
+				{
+					card_slot[i].index = index;
+					card_slot[i].is_set = is_set;
+					card_slot[i].is_rot90 = false;
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 	else
 	{
-		for(int i = 5; i < 10; i++)
+		if((info.type == CARD_MONSTER && slot < 5)||
+			(info.type != CARD_MONSTER && slot >=5))
 		{
-			if(card_slot[i].index == -1)
-			{
-				card_slot[i].index = index;
-				card_slot[i].is_set = is_set;
-				card_slot[i].is_rot90 = false;
-				return true;
-			}
+			card_slot[i].index = index;
+			card_slot[i].is_set = is_set;
+			card_slot[i].is_rot90 = (info.type == CARD_MONSTER && is_set);
+			return true;
 		}
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 }
 
@@ -75,9 +93,15 @@ void Field::draw(TextureDatabase& tdb, CardDatabase& cdb, int angle)
 int Field::pointToSlot(int xp, int yp)
 {
 	int left = xp - x;
-	int top = xp - y;
+	int top = yp - y;
 
 	left /= SLOT_SIZE;
 	top /= SLOT_SIZE;
-	
+
+	int slot = -1;
+	if(left >= 0 && left < 5 && top >= 0 && top < 2 && xp-x >= 0 && yp-y >= 0)
+	{
+		slot = left + top * 5;
+	}
+	return slot;
 }
