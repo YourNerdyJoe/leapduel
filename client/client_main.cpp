@@ -86,9 +86,9 @@ int main(int argc, char* argv[])
     }
     if(!controller.isGestureEnabled(Leap::Gesture::TYPE_SCREEN_TAP)){
        controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP) ;
-        controller.config().setFloat ("Gesture.ScreenTap.MinDownVelocity", 30.0);
-        controller.config().setFloat("Gesture.ScreenTap.HistorySeconds", .5);
-        controller.config().setFloat("Gesture.ScreenTap.MinDistance", 1.0);
+        controller.config().setFloat ("Gesture.ScreenTap.MinDownVelocity", 30.0f);
+        controller.config().setFloat("Gesture.ScreenTap.HistorySeconds", 0.5f);
+        controller.config().setFloat("Gesture.ScreenTap.MinDistance", 1.0f);
         controller.config().save();
     }
 
