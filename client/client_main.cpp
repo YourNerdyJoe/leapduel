@@ -5,6 +5,7 @@
 #include "../common/carddatabase.h"
 #include "../common/field.h"
 #include "../common/texture.h"
+#include "../common/hand.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -17,6 +18,8 @@ void quit();
 
 int main(int argc, char* argv[])
 {
+	int mouse_x, mouse_y;
+
 	dbgInit("debug.txt");
 	if(!init()) return 1;
 
@@ -31,6 +34,10 @@ int main(int argc, char* argv[])
 	field.playCard(cdb, 0, false, false);
 	field.playCard(cdb, 0, false, false);
 
+	Hand hand;
+	hand.setPosition(320, 380);
+	hand.addCard(0);
+
 	//loop
 	SDL_Event ev;
 	bool running = true;
@@ -43,10 +50,18 @@ int main(int argc, char* argv[])
 				case SDL_QUIT:
 					running = false;
 					break;
+
+				case SDL_MOUSEBUTTONDOWN:
+					if(ev.button.button == SDL_BUTTON_LEFT)
+					{
+						hand.addCard(0);
+					}
+					break;
 			}
 		}
 		
 		//update game logic
+		SDL_GetMouseState(&mouse_x, &mouse_y);
 
 		//clear
 		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
@@ -55,6 +70,10 @@ int main(int argc, char* argv[])
 
 		//draw
 		field.draw(tdb, cdb, 20, 20, 0);
+		hand.draw(tdb, cdb);
+
+		//test
+		drawCard(tdb, cdb.getCardInfo(0), mouse_x, mouse_y, 0);
 
 		//flip
 		SDL_RenderPresent(main_renderer);
