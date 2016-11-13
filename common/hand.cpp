@@ -20,7 +20,7 @@ void Hand::draw(TextureDatabase& tdb, CardDatabase& cdb)
 	//int offset = 20;;
 	for(auto it = card_index.begin(); it != card_index.end(); it++, i++)
 	{
-		drawCard(tdb, cdb.getCardInfo(*it), x+100*i+CARD_WIDTH/2, y, 0);
+		drawCard(tdb, cdb.getCardInfo(*it), x+200*i+CARD_WIDTH/2, y, 0);
 	}
 }
 
@@ -39,7 +39,7 @@ bool Hand::playCardAt(CardDatabase& cdb, int xp, int yp, bool is_set, Field& fie
 	if(yp >= y - CARD_HEIGHT/2)
 	{
 		xp -= x;
-		int card_x = xp / 100;
+		int card_x = xp / 200;
 		int size = card_index.size();
 		if(card_x < size)
 		{
