@@ -2,6 +2,12 @@
 #include "field.h"
 #include "texture.h"
 
+void Field::setPosition(int xp, int yp)
+{
+	x = xp;
+	y = yp;
+}
+
 bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90)
 {
 	CardInfo& info = cdb.getCardInfo(index);
@@ -37,7 +43,7 @@ bool Field::playCard(CardDatabase& cdb, int index, bool is_set, bool is_rot90)
 
 #define SLOT_SIZE 100
 
-void Field::draw(TextureDatabase& tdb, CardDatabase& cdb, int x, int y, int angle)
+void Field::draw(TextureDatabase& tdb, CardDatabase& cdb, int angle)
 {
 	int i;
 	for(i = 0; i < 10; i++)
@@ -64,4 +70,14 @@ void Field::draw(TextureDatabase& tdb, CardDatabase& cdb, int x, int y, int angl
 			drawCard(tdb, cdb.getCardInfo(idx), r.x + card_x, r.y + card_y, theta);
 		}
 	}
+}
+
+int Field::pointToSlot(int xp, int yp)
+{
+	int left = xp - x;
+	int top = xp - y;
+
+	left /= SLOT_SIZE;
+	top /= SLOT_SIZE;
+	
 }
