@@ -14,6 +14,7 @@
 #include "../common/deck.h"
 #include "../common/grave.h"
 #include "LeapListener.h"
+#include "LeapMotion.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -126,6 +127,20 @@ int main(int argc, char* argv[])
 		}
 		
 		bool is_leap_valid = getCoords(&leap_x, &leap_y, controller, listener);
+        int swipe_dir = LeapMotion::ProcessGestures(controller);
+
+        if(swipe_dir == -1 ){
+            dbgPrint("-1 Yo");
+            std::cout << "minus 1" << std::endl;
+        }
+        else if (swipe_dir == 1)
+        {
+            dbgPrint("1 Yo");
+            std::cout << "positive 1" << std::endl;
+        } else {
+           // dbgPrint("0 Yo");
+
+        }
 
 		//update game logic
 		SDL_GetMouseState(&mouse_x, &mouse_y);

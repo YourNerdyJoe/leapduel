@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <Leap.h>
+#include <zconf.h>
 #include "LeapListener.h"
 
 #ifdef _DEBUG
@@ -16,6 +17,7 @@ void LeapListener::onConnect(const Leap::Controller& controller) {
 }
 
 void LeapListener::onFrame(const Leap::Controller& controller) {
+	unsigned microseconds = 50;
 	const Leap::Frame frame = controller.frame();
 	Leap::Finger pointable = frame.fingers().frontmost();
 	float scale_factor = 2;
@@ -30,6 +32,8 @@ void LeapListener::onFrame(const Leap::Controller& controller) {
 			<< ", fingers: " << frame.fingers().count() << std::endl;
 
 		std::cout << "Finger :" << pointable.stabilizedTipPosition().toString();
+		usleep(microseconds);
+
 }
 
 
