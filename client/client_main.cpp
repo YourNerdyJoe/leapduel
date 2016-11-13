@@ -78,7 +78,11 @@ int main(int argc, char* argv[])
         controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     }
     if(!controller.isGestureEnabled(Leap::Gesture::TYPE_KEY_TAP)){
-       controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP) ;
+       controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
+       controller.config().setFloat ("Gesture.KeyTap.MinDownVelocity", 40.0f);
+       controller.config().setFloat ("Gesture.KeyTap.HistorySeconds", .2f);
+       controller.config().setFloat ("Gesture.KeyTap.MinDistance", 1.0f);
+       controller.config().save();
     }
     if(!controller.isGestureEnabled(Leap::Gesture::TYPE_SCREEN_TAP)){
        controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP) ;
@@ -142,6 +146,7 @@ int main(int argc, char* argv[])
 		
 		bool is_hori = false;
 		bool is_leap_valid = getCoords(&leap_x, &leap_y, controller, listener);
+
         int swipe_dir = LeapMotion::ProcessGestures(controller, &cur_gesture, &is_hori);
 
 		if(ticks - last_ticks > 1000)	//one gesture per sec

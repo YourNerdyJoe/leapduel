@@ -58,6 +58,12 @@ int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool*
                     return 1;
                 }
             }
+            case Leap::Gesture::TYPE_KEY_TAP:
+            {
+                Leap::Vector handDir = gesture.hands()[0].direction();
+
+
+            }
             default:
                 break;
         }
