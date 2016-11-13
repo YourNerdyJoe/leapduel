@@ -34,9 +34,9 @@ int LeapMotion::ProcessGestures(Leap::Controller controller)
                 Leap::Vector handDir = gesture.hands()[0].direction();
 
                 // naive left/right swipe detection
-                if (handDir.y < -0.3f)
+                if (handDir.y < -0.5f)
                     return -1;
-                else if (handDir.y > 0.3f)
+                else if (handDir.y > 0.5f)
                     return 1;
             }
             default:
