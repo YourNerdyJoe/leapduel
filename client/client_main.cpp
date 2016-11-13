@@ -1,5 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <Leap.h>
+#include <zconf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -9,6 +11,7 @@
 #include "../common/texture.h"
 #include "../common/hand.h"
 #include "../common/deck.h"
+#include "SampleListener.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -18,6 +21,7 @@ SDL_Renderer* main_renderer;
 
 bool init();
 void quit();
+
 
 int main(int argc, char* argv[])
 {
@@ -48,6 +52,12 @@ int main(int argc, char* argv[])
 	Deck deck;
 	deck.init(0, 3, 3);
 	deck.setPosition(540, 120);
+
+
+	SampleListener listener;
+	Leap::Controller controller;
+	controller.addListener(listener);
+	controller.setPolicy(Leap::Controller::POLICY_IMAGES);
 
 	//loop
 	SDL_Event ev;
@@ -106,7 +116,10 @@ int main(int argc, char* argv[])
 
 		//flip
 		SDL_RenderPresent(main_renderer);
+
 	}
+	//remove the Leap Motion Listener
+	controller.removeListener(listener);
 
 	quit();
 	dbgExit();
@@ -155,3 +168,4 @@ void quit()
 	
 	SDL_Quit();
 }
+

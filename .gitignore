@@ -6,3 +6,5 @@ debug.txt
 *.vcx.*
 *.vcx*
 build/*
+.idea/*
+CMakeLists.txt
