@@ -29,6 +29,8 @@ listener);
 
 int main(int argc, char* argv[])
 {
+  system("./play.sh");
+
 	int mouse_x, mouse_y;
     float leap_x, leap_y;
 	int mouse_start_x = 0, mouse_start_y = 0;
