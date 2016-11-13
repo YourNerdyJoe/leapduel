@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	hand.setPosition(30, 380);
 
 	Deck deck;
-	deck.init(0, 3, 3);
+	deck.init(0, 7, 3);
 	deck.setPosition(540, 120);
 
 	for(int i = 0; i < 5; i++)
