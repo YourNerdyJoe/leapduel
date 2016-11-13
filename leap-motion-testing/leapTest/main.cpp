@@ -1,4 +1,3 @@
-//#include <Windows.h>
 #include <unistd.h>
 #include <iostream>
 #include <string.h>
@@ -17,6 +16,7 @@ void SampleListener::onConnect(const Controller& controller) {
 }
 
 void SampleListener::onFrame(const Controller& controller) {
+  unsigned int microseconds = 50;
 	const Frame frame = controller.frame();
 	Leap::Finger pointable = frame.fingers().frontmost();
 	//Hand hand = frame.hands()[0];
@@ -31,7 +31,7 @@ void SampleListener::onFrame(const Controller& controller) {
 			<< ", hands: " << frame.hands().count()
 			<< ", fingers: " << frame.fingers().count() << std::endl;
 
-		//sleep(50);
+		usleep(microseconds);
 		std::cout << "Finger :" << pointable.tipPosition().toString();
 	//}
 }
