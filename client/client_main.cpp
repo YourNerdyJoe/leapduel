@@ -147,12 +147,7 @@ int main(int argc, char* argv[])
 		bool is_hori = false;
 		int type = 0;
 		bool is_leap_valid = getCoords(&leap_x, &leap_y, controller, listener);
-<<<<<<< HEAD
         int swipe_dir = LeapMotion::ProcessGestures(controller, &cur_gesture, &is_hori, &type);
-=======
-
-        int swipe_dir = LeapMotion::ProcessGestures(controller, &cur_gesture, &is_hori);
->>>>>>> f88c3fe52f367446f1e089f7878189b0e9730a85
 
 		if(ticks - last_ticks > 1000)	//one gesture per sec
 		{
@@ -187,9 +182,37 @@ int main(int argc, char* argv[])
 					if(cur_gesture != last_gesture)
 					{
 						//swipe left to draw cards
-						hand.addCard(deck.popCard());
-						last_gesture = cur_gesture;
-						last_ticks = ticks;
+						//hand.addCard(deck.popCard());
+						//last_gesture = cur_gesture;
+						//last_ticks = ticks;
+					}
+				}
+			}
+			if(type == 1)
+			{
+				if(deck.isPointOnDeck(leap_x, leap_y))
+				{
+					hand.addCard(deck.popCard());
+					last_gesture = cur_gesture;
+					last_ticks = ticks;
+				}
+				else if(false)
+				{
+
+				}
+				else
+				{
+					//tap to discard
+					int slot = field.pointToSlot(leap_x, leap_y);
+					if(slot != -1)
+					{
+						if(field.getSlotIndex(slot) != -1)
+						{
+							grave.setIndex(field.getSlotIndex(slot));
+							field.setSlotIndex(slot, -1);
+							last_gesture = cur_gesture;
+							last_ticks = ticks;
+						}
 					}
 				}
 			}

@@ -61,7 +61,7 @@ int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool*
             case Leap::Gesture::TYPE_KEY_TAP:
             {
                 Leap::Vector handDir = gesture.hands()[0].direction();
-
+                *type = 1;
 
             }
             default:
