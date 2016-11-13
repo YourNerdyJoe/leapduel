@@ -23,7 +23,7 @@ SDL_Renderer* main_renderer;
 
 bool init();
 void quit();
-void getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
+bool getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
 listener);
 
 int main(int argc, char* argv[])
@@ -81,8 +81,6 @@ int main(int argc, char* argv[])
 	bool running = true;
 	while(running)
 	{
-
-        getCoords(&leap_x, &leap_y, controller, listener);
 		while(SDL_PollEvent(&ev))
 		{
 			switch(ev.type)
@@ -127,6 +125,8 @@ int main(int argc, char* argv[])
 			}
 		}
 		
+		bool is_leap_valid = getCoords(&leap_x, &leap_y, controller, listener);
+
 		//update game logic
 		SDL_GetMouseState(&mouse_x, &mouse_y);
 
@@ -140,6 +140,11 @@ int main(int argc, char* argv[])
 		hand.draw(tdb, cdb);
 		grave.draw(tdb, cdb, 0);
 		deck.draw(tdb, 0);
+
+		if(is_leap_valid)
+		{
+			drawCursor(tdb, leap_x, leap_y);
+		}
 
 		//test
 		//drawCard(tdb, cdb.getCardInfo(0), mouse_x, mouse_y, 0);
@@ -191,7 +196,7 @@ bool init()
 
 
 //get the coordinates of where the hand in LeapMotoin is
-void getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
+bool getCoords(float *a, float *b, const Leap::Controller& controller, const LeapListener&
 listener){
 
     Leap::Frame frame = controller.frame();
@@ -200,8 +205,8 @@ listener){
     Leap::InteractionBox iBox = controller.frame().interactionBox();
     Leap::Vector normalizedPosition = iBox.normalizePoint(stabilizedPosition);
     *a = normalizedPosition.x * SCREEN_WIDTH;
-    *b = normalizedPosition.y * SCREEN_HEIGHT;
-
+    *b = SCREEN_HEIGHT - normalizedPosition.y * SCREEN_HEIGHT;
+	return finger.isValid();
 }
 
 void quit()

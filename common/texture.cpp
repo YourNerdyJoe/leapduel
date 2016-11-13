@@ -109,8 +109,8 @@ void drawCardBlank(int x, int y)
 
 void drawCursor(TextureDatabase& tdb, int x, int y)
 {
-	SDL_Rect dst = { x - CARD_WIDTH/2, y - CARD_HEIGHT/2, CARD_WIDTH, CARD_HEIGHT };
-	SDL_Rect src = { 0, 0, 167, 245 };
+	SDL_Rect dst = { x - 16, y - 16, 32, 32 };
+	SDL_Rect src = { 0, 0, 32, 32 };
 
 	SDL_Point center = { CARD_WIDTH/2, CARD_HEIGHT/2 };
 
