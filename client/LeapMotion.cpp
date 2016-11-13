@@ -45,14 +45,16 @@ int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool*
                 {
                     return 1;
                 }
-                if (handDir.x < -1.0f)
+                if (handDir.x < -0.7f)
                 {
                     *is_horizontal = true;
+                    std::cout << "-1 yo" << std::endl;
                     return -1;
                 }
-                else if (handDir.x > 1.0f)
+                else if (handDir.x > 0.7f)
                 {
                     *is_horizontal = true;
+                    std::cout << "1 yo" << std::endl;
                     return 1;
                 }
             }

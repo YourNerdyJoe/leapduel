@@ -77,6 +77,13 @@ int main(int argc, char* argv[])
     if(!controller.isGestureEnabled(Leap::Gesture::TYPE_SWIPE)){
         controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     }
+    if(!controller.isGestureEnabled(Leap::Gesture::TYPE_KEY_TAP)){
+       controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP) ;
+    }
+    if(!controller.isGestureEnabled(Leap::Gesture::TYPE_SCREEN_TAP)){
+       controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP) ;
+    }
+
 
     listener.onConnect(controller);
 

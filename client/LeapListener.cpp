@@ -17,7 +17,7 @@ void LeapListener::onConnect(const Leap::Controller& controller) {
 }
 
 void LeapListener::onFrame(const Leap::Controller& controller) {
-	unsigned microseconds = 50;
+	unsigned microseconds = 150;
 	const Leap::Frame frame = controller.frame();
 	Leap::Finger pointable = frame.fingers().frontmost();
 	float scale_factor = 2;
