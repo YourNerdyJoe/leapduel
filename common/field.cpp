@@ -131,3 +131,17 @@ void Field::setSlotIndex(int slot, int index)
 {
 	card_slot[slot].index = index;
 }
+
+void Field::togglePos(CardDatabase& cdb, int xp, int yp)
+{
+	int slot = pointToSlot(xp, yp);
+	if(cdb.getCardInfo(card_slot[slot].index).type == CARD_MONSTER)
+	{
+		card_slot[slot].is_set = false;
+		card_slot[slot].is_rot90 = !card_slot[slot].is_rot90;
+	}
+	else
+	{
+		card_slot[slot].is_set = !card_slot[slot].is_set;
+	}
+}

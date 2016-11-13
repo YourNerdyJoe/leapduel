@@ -57,17 +57,20 @@ int LeapMotion::ProcessGestures(Leap::Controller controller, uint32_t* id, bool*
                     std::cout << "1 yo" << std::endl;
                     return 1;
                 }
+                break;
             }
             case Leap::Gesture::TYPE_KEY_TAP:
             {
                 Leap::Vector handDir = gesture.hands()[0].direction();
                 *type = 1;
+                break;
 
             }
             case Leap::Gesture::TYPE_SCREEN_TAP:
             {
                Leap::Vector handDir = gesture.hands()[0].direction();
-                *type = 1;
+                *type = 2;
+                break;
             }
             default:
                 break;

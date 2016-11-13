@@ -220,6 +220,12 @@ int main(int argc, char* argv[])
 					}
 				}
 			}
+			else if(type == 2)
+			{
+				field.togglePos(cdb, leap_x, leap_y);
+				last_gesture = cur_gesture;
+				last_ticks = ticks;
+			}
 		}
 
 		//update game logic
