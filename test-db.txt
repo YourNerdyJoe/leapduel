@@ -4,8 +4,14 @@ dark_magician.jpg
 2500
 2100
 
-Dark Magician Girl
-dark_magician.jpg
+Pot of Greed
+potofgreed.jpg
+2
+0
+0
+
+Baby Dragon
+babydragon.jpg
 1
-2500
-2100
+1200
+700

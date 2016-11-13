@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "../common/debug.h"
 #include "../common/carddatabase.h"
 #include "../common/field.h"
@@ -21,6 +23,8 @@ int main(int argc, char* argv[])
 {
 	int mouse_x, mouse_y;
 
+	srand(time(NULL));
+
 	dbgInit("debug.txt");
 	if(!init()) return 1;
 
@@ -40,6 +44,7 @@ int main(int argc, char* argv[])
 	hand.addCard(0);
 
 	Deck deck;
+	deck.init(0, 3, 3);
 	deck.setPosition(540, 120);
 
 	//loop
@@ -59,7 +64,7 @@ int main(int argc, char* argv[])
 					if(ev.button.button == SDL_BUTTON_LEFT)
 					{
 						if(deck.isPointOnDeck(ev.button.x, ev.button.y))
-							hand.addCard(0);
+							hand.addCard(deck.popCard());
 					}
 					break;
 			}
