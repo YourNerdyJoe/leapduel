@@ -54,6 +54,8 @@ int main(int argc, char* argv[])
 			}
 		}
 		
+		//update game logic
+
 		//clear
 		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
 		SDL_RenderClear(main_renderer);
