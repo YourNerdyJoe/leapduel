@@ -14,7 +14,7 @@ public:
 	void addCard(int index);
 
 	int getCardAt(int x, int y);
-	int playCardAt(CardDatabase& cdb, int x, int y, Field& field, int slot);
+	bool playCardAt(CardDatabase& cdb, int xp, int yp, bool is_set, Field& field, int slot);
 };
 
 #endif

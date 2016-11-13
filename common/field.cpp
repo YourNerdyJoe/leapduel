@@ -105,3 +105,13 @@ int Field::pointToSlot(int xp, int yp)
 	}
 	return slot;
 }
+
+int Field::getSlotIndex(int slot)
+{
+	return card_slot[slot].index;
+}
+
+void Field::setSlotIndex(int slot, int index)
+{
+	card_slot[slot].index = index;
+}
